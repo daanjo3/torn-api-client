@@ -1,0 +1,16 @@
+{
+  "name": "torn-api-client",
+  "version": "1.0.0",
+  "description": "API client for the official Torn API",
+  "main": "index.js",
+  "repository": "https://github.com/daanjo3/torn-api-client",
+  "author": "daanjo3",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "jest": "^27.1.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.2"
+  }
+}
