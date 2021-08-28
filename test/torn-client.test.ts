@@ -1,21 +1,45 @@
-import TornClient from '../src/torn-client';
+import TornClient from '../src/TornClient';
+import type { UserSelection } from '../src/@types/selections';
+import dummyresponse from './resources/user-response-1.json';
 
 const BASE_URL = 'https://api.torn.com';
-const MY_API_KEY = 'ydhSfI0i2qxeDIg6';
+const TEST_API_KEY = 'ydhSfI0i2qxeDIg6';
+
+const client = new TornClient(TEST_API_KEY);
+const spy = jest.spyOn(client, 'execute').mockImplementation((url) => new Promise(() => dummyresponse));
 
 test('Torn client construction stores API key', () => {
-    const client = new TornClient(MY_API_KEY);
-    expect(client.apiKey).toEqual(MY_API_KEY);
+    expect(client.apiKey).toMatch(TEST_API_KEY);
 })
 
 test('Build URL returns valid API string', () => {
-    const client = new TornClient(MY_API_KEY);
-    const URL_WITHOUT_PARAMS = `${BASE_URL}/user/?selections=&key=${MY_API_KEY}`;
+    const URL_WITHOUT_PARAMS = `${BASE_URL}/user/?selections=&key=${TEST_API_KEY}`;
 
-    expect(client.buildUrl('user')).toEqual(URL_WITHOUT_PARAMS);
+    expect(client.buildUrl('user')).toMatch(URL_WITHOUT_PARAMS);
 
     // TODO
     // - id is provided
     // - selections are provided as string
     // - selections are provided as array
+})
+
+test('Build selection string correctly builds', () => {
+    
+    const SINGLE_SELECTION_STRING = client.buildSelectionString('ammo');
+    expect(SINGLE_SELECTION_STRING).toMatch('ammo');
+    
+    const MULT_SELECTION_STRING = client.buildSelectionString(['ammo', 'attacks']);
+    expect(MULT_SELECTION_STRING).toMatch('ammo,attacks');
+    
+    // Using any other values crashes the typescript compiler
+})
+
+test('Providing non-user selection to user() throws', async () => {
+    expect.assertions(1);
+    try {
+        await client.user(undefined, 'something_false' as unknown as UserSelection)
+    } catch (e) {
+        expect(e).toBeDefined();
+    }
+    
 })
