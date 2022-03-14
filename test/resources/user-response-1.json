@@ -12,9 +12,9 @@
     "age": 430,
     "role": "Civilian",
     "donator": 1,
-    "player_id": 2575480,
-    "name": "BollePapzak",
-    "property_id": 3016701,
+    "player_id": 947742,
+    "name": "the_dude",
+    "property_id": 425451,
     "competition": null,
     "life": {
         "current": 1975,
@@ -32,29 +32,29 @@
         "until": 1630114475
     },
     "job": {
-        "position": "Employee",
-        "company_id": 84783,
-        "company_name": "KaziiSutra",
+        "position": "Director",
+        "company_id": 11111,
+        "company_name": "Some nonexistant company",
         "company_type": 10
     },
     "faction": {
-        "position": "Verified Member",
-        "faction_id": 22295,
+        "position": "Member",
+        "faction_id": 88295,
         "days_in_faction": 128,
-        "faction_name": "INFINITE DIMENSION III",
-        "faction_tag": "ID"
+        "faction_name": "NOT A REAL FACTION",
+        "faction_tag": "NARF"
     },
     "married": {
-        "spouse_id": 2203379,
-        "spouse_name": "RickAsWell",
+        "spouse_id": 9993379,
+        "spouse_name": "YourMom",
         "duration": 159
     },
     "basicicons": {
         "icon6": "Male",
         "icon4": "Subscriber",
-        "icon8": "Married - To RickAsWell",
-        "icon27": "Company - Sales Assistant of KaziiSutra (Adult Novelties)",
-        "icon9": "Faction - Verified Member of INFINITE DIMENSION III",
+        "icon8": "Married - YourMom",
+        "icon27": "Company - Director of Some nonexistant company (Adult Novelties)",
+        "icon9": "Faction - Member of NOT A REAL FACTION",
         "icon15": "Hospital - Hospitalized by someone - 02:21:52 "
     },
     "states": {

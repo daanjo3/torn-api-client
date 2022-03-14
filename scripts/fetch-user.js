@@ -1,9 +1,7 @@
-const TornClient = require("../dist/torn-client.js").default;
+const TornClient = require('../dist/TornClient').default;
 
-const client = new TornClient();
+const client = new TornClient(process.env.TORN_API_KEY);
 
 // Basic user request
 // client.user().then(console.log);
-
-// User selection request (bars)
-client.user(null, 'scar').then(console.log);
+client.user(null, ['battlestats', 'money']).then(console.log);

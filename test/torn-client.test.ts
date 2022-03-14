@@ -1,5 +1,4 @@
 import TornClient from '../src/TornClient';
-import type { UserSelection } from '../src/@types/selections';
 import dummyresponse from './resources/user-response-1.json';
 
 const BASE_URL = 'https://api.torn.com';
@@ -14,30 +13,28 @@ test('Torn client construction stores API key', () => {
 
 test('Build URL returns valid API string', () => {
     const URL_WITHOUT_PARAMS = `${BASE_URL}/user/?selections=&key=${TEST_API_KEY}`;
-
-    expect(client.buildUrl('user')).toMatch(URL_WITHOUT_PARAMS);
+    expect(client.buildUrl('user', [])).toMatch(URL_WITHOUT_PARAMS);
 
     // TODO
     // - id is provided
-    // - selections are provided as string
     // - selections are provided as array
 })
 
 test('Build selection string correctly builds', () => {
-    
-    const SINGLE_SELECTION_STRING = client.buildSelectionString('ammo');
+    const SINGLE_SELECTION_STRING = client.buildUrl('ammo', []);
     expect(SINGLE_SELECTION_STRING).toMatch('ammo');
     
-    const MULT_SELECTION_STRING = client.buildSelectionString(['ammo', 'attacks']);
+    const MULT_SELECTION_STRING = client.buildSelectionParam(['ammo', 'attacks']);
     expect(MULT_SELECTION_STRING).toMatch('ammo,attacks');
     
     // Using any other values crashes the typescript compiler
 })
 
 test('Providing non-user selection to user() throws', async () => {
+    const client = new TornClient(TEST_API_KEY, { verifySelection: true });
     expect.assertions(1);
     try {
-        await client.user(undefined, 'something_false' as unknown as UserSelection)
+        await client.user(undefined, ['something_false'])
     } catch (e) {
         expect(e).toBeDefined();
     }

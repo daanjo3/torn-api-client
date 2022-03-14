@@ -1,14 +1,16 @@
 {
   "name": "torn-api-client",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "API client for the official Torn API",
-  "main": "index.js",
-  "repository": "https://github.com/daanjo3/torn-api-client",
   "author": "daanjo3",
   "license": "MIT",
   "private": false,
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf dist/",
     "lint": "eslint --ext .ts src/",
     "test": "jest",
     "test-live": "node scripts/run-live.js"
@@ -23,7 +25,7 @@
     "eslint": "^7.32.0",
     "jest": "^27.1.0",
     "ts-jest": "^27.0.5",
-    "ts-node": "^10.2.1",
     "typescript": "^4.4.2"
-  }
+  },
+  "repository": "github:daanjo3/torn-api-client"
 }
