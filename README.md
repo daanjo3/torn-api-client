@@ -28,7 +28,6 @@ client.company('9101', ['employees']).then(console.log);
 client.company('9101', [api.company.employees]).then(console.log);
 
 // ... And more, like torn, properties and item-market!
-
 ```
 
 ### Future additions
@@ -45,7 +44,7 @@ Simply install it using `npm install torn-api-client`.
 
 ## Contributing
 1. Get your API key from the [Torn website](https://www.torn.com/preferences.php#tab=api).
-2. After running `yarn build` you can use the scripts in the `scripts/` directory.
+2. After running `yarn install` and `yarn build` you can use the scripts in the `scripts/` directory.
 
     For your testing convenience it is advisable to set your API key as environment variable called `TORN_API_KEY`. The scripts will use this to fill in the key when creating the client.
 
