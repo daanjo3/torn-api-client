@@ -9,6 +9,7 @@ Unofficial API client for the official Torn API. This API client provides a simp
 ### Example
 Try it out using this example below.
 ```js
+import TornClient, { api } from 'torn-api-client';
 const client = new TornClient('my-api-key');
 
 // Get the default from the user compartment of the API key owner.
@@ -22,6 +23,9 @@ client.user('887766', ['basic', 'icons']).then(console.log);
 client.faction('1234').then(console.log);
 // Get the employees section from the company compartment for company with id 9101.
 client.company('9101', ['employees']).then(console.log);
+
+// Use the api object to select compartments
+client.company('9101', [api.company.employees]).then(console.log);
 
 // ... And more, like torn, properties and item-market!
 
