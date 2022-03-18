@@ -8,6 +8,9 @@
   "files": [
     "dist/**"
   ],
+  "keywords": [
+    "torn", "api", "torn-api", "api-client"
+  ],
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist/",
