@@ -1,3 +1,13 @@
+
+<p align="center">
+  <a href="https://badge.fury.io/js/torn-api-client">
+    <img src="https://badge.fury.io/js/torn-api-client.svg" alt="npm version">
+  </a>
+  <a href="https://twitter.com/intent/follow?screen_name=fbjest">
+    <img src="https://img.shields.io/github/license/daanjo3/torn-api-client" alt="torn-api-client is released under the MIT license">
+  </a>
+</p>
+
 # torn-api-client
 Unofficial API client for the official Torn API. This API client provides a simplified interface on the Torn API, which should make integration of Torn into JS applications easier.
 
