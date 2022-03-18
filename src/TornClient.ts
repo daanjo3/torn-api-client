@@ -2,7 +2,7 @@ import axios from "axios";
 
 import apiSelect from './selection'
 
-declare interface ClientOptions {
+export interface ClientOptions {
     verifySelection?: boolean,
     throwError?: boolean,
     baseUrl?: string,

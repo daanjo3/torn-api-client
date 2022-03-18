@@ -6,14 +6,15 @@
   "license": "MIT",
   "private": false,
   "files": [
-    "dist/**"
+    "lib/**"
   ],
+  "main": "lib/index.js",
   "keywords": [
     "torn", "api", "torn-api", "api-client"
   ],
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf dist/",
+    "clean": "rm -rf lib/",
     "lint": "eslint --ext .ts src/",
     "test": "jest",
     "test-live": "node scripts/run-live.js"
