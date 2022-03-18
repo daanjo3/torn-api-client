@@ -13,8 +13,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "outDir": "dist",
-    "jsx": "preserve",
+    "outDir": "lib",
     "resolveJsonModule": true
   },
   "rootDir": "src",
