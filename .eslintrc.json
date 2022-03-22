@@ -17,5 +17,5 @@
     ],
     "rules": {
     },
-    "ignorePatterns": "scripts/*"
+    "ignorePatterns": ["scripts/*", "tools/generate-interfaces"]
 }
