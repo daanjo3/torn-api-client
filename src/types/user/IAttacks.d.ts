@@ -1,17 +1,6 @@
-import type { IUserData } from "./common";
+import { ISelection } from "../ISelection";
 
-export interface IAmmo extends IUserData {
-  ammo: {
-    ammoID: number;
-    typeID: number;
-    size: string;
-    type: string;
-    quantity: number;
-    equipped: number;
-  }[];
-}
-
-export interface IAttacks extends IUserData {
+export interface IAttacks extends ISelection {
   attacks: {
     [attackId: string]: {
       code: string;
@@ -44,17 +33,3 @@ export interface IAttacks extends IUserData {
     };
   };
 }
-
-export interface IAttacksFull {
-  code: string;
-  timestamp_started: number;
-  timestamp_ended: number;
-  attacker_id: number;
-  attacker_faction: number;
-  defender_id: number;
-  defender_faction: number;
-  result: string;
-  stealthed: number;
-  respect: number;
-}
-

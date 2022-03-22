@@ -1,0 +1,53 @@
+{
+    "awake": 150,
+    "awakemax": 150,
+    "crimes": 70,
+    "statstamp": 1647629162,
+    "crimesmax": 70,
+    "happymax": 4525,
+    "maxlife": 2375,
+    "donater": 22,
+    "factionID": 22295,
+    "propertyID": 3016701,
+    "userID": 2575480,
+    "server_time": 1647708325,
+    "happy": {
+            "current": 4525,
+            "maximum": 4525,
+            "increment": 5,
+            "interval": 900,
+            "ticktime": 875,
+            "fulltime": 0
+    },
+    "life": {
+            "current": 2375,
+            "maximum": 2375,
+            "increment": 142,
+            "interval": 300,
+            "ticktime": 275,
+            "fulltime": 0
+    },
+    "energy": {
+            "current": 150,
+            "maximum": 150,
+            "increment": 5,
+            "interval": 600,
+            "ticktime": 275,
+            "fulltime": 0
+    },
+    "nerve": {
+            "current": 70,
+            "maximum": 70,
+            "increment": 1,
+            "interval": 300,
+            "ticktime": 275,
+            "fulltime": 0
+    },
+    "chain": {
+            "current": 0,
+            "maximum": 25000,
+            "timeout": 0,
+            "modifier": 1,
+            "cooldown": 0
+    }
+}
