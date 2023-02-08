@@ -1,1 +1,1 @@
-export type Selection = Record<string, unknown>;
+export type Selection = Record<string, unknown>
