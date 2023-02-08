@@ -1,11 +1,9 @@
-import JsonToTS from 'json-to-ts'
 import fs from 'fs'
 import TornClient from '../../../src'
 import allCompartments, { Compartment } from './compartments'
 import RequestLimiter from './RequestLimiter'
 import { GeneratorResult } from './types/generator'
 import logger from './util/logger'
-import translate from './translate'
 import Generator from './generator'
 
 const baseOutPath = `${__dirname}/../out`
