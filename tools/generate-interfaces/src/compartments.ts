@@ -1,4 +1,4 @@
-import TornClient, { api } from '../../src'
+import TornClient, { api } from '../../../src'
 
 export interface Compartment {
   name: string

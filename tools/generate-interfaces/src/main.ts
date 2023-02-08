@@ -1,10 +1,14 @@
 import JsonToTS from 'json-to-ts'
 import fs from 'fs'
-import TornClient, { api } from '../../src'
+import TornClient from '../../../src'
 import allCompartments, { Compartment } from './compartments'
 import RequestLimiter from './RequestLimiter'
+import { GeneratorResult } from './types/generator'
+import logger from './util/logger'
+import translate from './translate'
+import Generator from './generator'
 
-const baseOutPath = `${__dirname}/out`
+const baseOutPath = `${__dirname}/../out`
 if (!process.env.TORN_API_KEY) {
   throw new Error('Environment variable TORN_API_KEY is not set')
 }
@@ -32,10 +36,11 @@ export default main()
  */
 
 async function loop(compartments: Compartment[]) {
-  const outcome: GeneratorResult[] = []
+  const results: GeneratorResult[] = []
   const limiter = new RequestLimiter()
+  const generator = new Generator(baseOutPath)
 
-  generateSelectionBase()
+  generator.generateSelectionBase()
 
   for (const compartment of compartments) {
     console.log(`Processing compartment ${compartment.name}`)
@@ -48,13 +53,17 @@ async function loop(compartments: Compartment[]) {
       try {
         data = await fetchData(compartment, selection)
       } catch (err: any) {
-        outcome.push({ ...(err as GeneratorResult) })
+        results.push({ ...(err as GeneratorResult) })
         continue
       }
 
       // Translate it to an interface
-      const result = await generateInterface(compartment.name, selection, data)
-      outcome.push({ ...result })
+      const result = generator.generateSelectionInterface(
+        compartment.name,
+        selection,
+        data
+      )
+      results.push({ ...result })
 
       // fetchData(compartment, selection)
       //   .then((data) => generateInterface(compartment.name, selection, data))
@@ -65,20 +74,7 @@ async function loop(compartments: Compartment[]) {
     }
   }
 
-  printOutcome(outcome)
-}
-
-function formatName(selection) {
-  return selection.charAt(0).toUpperCase() + selection.slice(1)
-}
-
-interface GeneratorResult {
-  compartment: string
-  selection: string
-  interface: string
-  state: string
-  data?: any
-  error?: string
+  logger.printOutcome(results)
 }
 
 // Get a JSON example of the data to be translated.
@@ -101,65 +97,6 @@ async function fetchData(
       error: err,
     }
   }
-}
-
-function generateSelectionBase() {
-  const path = `${baseOutPath}/Selection.d.ts`
-  const content = 'export type Selection = Record<string, unknown>\n'
-  fs.writeFileSync(path, content)
-}
-
-async function generateInterface(
-  compartment: string,
-  selection: string,
-  data: any
-): Promise<GeneratorResult> {
-  // Get the interface name from the selection
-  const name = formatName(selection)
-  const content = translateInterface(data, name)
-  const path = `${baseOutPath}/${compartment}/${name}.d.ts`
-
-  fs.writeFileSync(path, content.join('\n'))
-  console.log(`Created ${name}.d.ts`)
-
-  return {
-    compartment,
-    selection,
-    interface: `${compartment}/${selection}`,
-    state: 'success',
-  }
-}
-
-function translateInterface(jsonData: any, rootName: string): string[] {
-  // Make a rough translation from JSON to Typescript
-  const interfaceContent = JsonToTS(jsonData, { rootName })
-  // Make sure the main interface is exported and extends the ISelection type
-  interfaceContent[0] = interfaceContent[0].replace(
-    `interface ${rootName}`,
-    `export interface ${rootName} extends Selection`
-  )
-  // Add the import line for ISelection to the top of the file.
-  interfaceContent.unshift('import { Selection } from "../Selection";')
-
-  return interfaceContent
-}
-
-function printOutcome(outcome: GeneratorResult[]) {
-  const successNum = outcome.filter(
-    (result) => result.state == 'success'
-  ).length
-  const failed = outcome
-    .filter((result) => result.state == 'failed')
-    .map(
-      (result) =>
-        result.compartment + '.' + result.selection + ': ' + result.error
-    )
-  const failedNum = failed.length
-  console.log(
-    `--Outcome--\nSuccess\n\tCount: ${successNum}\nFailed:\n\tCount: ${failedNum}\n\tSelections:\n\t\t${failed.join(
-      '\n\t\t'
-    )}`
-  )
 }
 
 function createOutDirectory() {
