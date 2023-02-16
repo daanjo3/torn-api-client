@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "properties": {
+    "ammo": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ammoID": {
+            "type": "integer"
+          },
+          "typeID": {
+            "type": "integer"
+          },
+          "size": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "equipped": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "ammoID",
+          "typeID",
+          "size",
+          "type",
+          "quantity",
+          "equipped"
+        ]
+      }
+    }
+  },
+  "required": [
+    "ammo"
+  ]
+}

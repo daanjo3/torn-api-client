@@ -1,0 +1,52 @@
+{
+  "ammo": [
+    {
+      "ammoID": 2,
+      "typeID": 1,
+      "size": "9mm Parabellum Round",
+      "type": "Standard",
+      "quantity": 9126,
+      "equipped": 0
+    },
+    {
+      "ammoID": 3,
+      "typeID": 1,
+      "size": "5.7mm High Vel. Round",
+      "type": "Standard",
+      "quantity": 975,
+      "equipped": 0
+    },
+    {
+      "ammoID": 5,
+      "typeID": 1,
+      "size": "5.56mm Rifle Round",
+      "type": "Standard",
+      "quantity": 4267,
+      "equipped": 1
+    },
+    {
+      "ammoID": 9,
+      "typeID": 1,
+      "size": "5.45mm Rifle Round",
+      "type": "Standard",
+      "quantity": 950,
+      "equipped": 0
+    },
+    {
+      "ammoID": 8,
+      "typeID": 1,
+      "size": "Warhead",
+      "type": "Standard",
+      "quantity": 50,
+      "equipped": 0
+    },
+    {
+      "ammoID": 18,
+      "typeID": 1,
+      "size": "Liter of Fuel",
+      "type": "Standard",
+      "quantity": 361,
+      "equipped": 1
+    }
+  ]
+}
