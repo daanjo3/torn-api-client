@@ -1,12 +1,13 @@
 import axios from 'axios'
 
 import apiSelect from './selection'
-import { ClientOptions, ErrorResponse } from './types'
+import { ClientOptions, ErrorResponse, Meta } from './types'
 
 export default class TornClient {
   private apiKey: string
   private doVerifySelection: boolean
   private baseUrl: string
+  private preRequestListeners: Map<string, (meta: Meta) => void> = new Map()
 
   /**
    * Constructor for the TornClient. An API key must be provided.
@@ -26,6 +27,14 @@ export default class TornClient {
 
   setApiKey(apiKey: string): void {
     this.apiKey = apiKey
+  }
+
+  addPreRequestListener(tag: string, func: (meta: Meta) => void): void {
+    this.preRequestListeners.set(tag, func)
+  }
+
+  removePreRequestListener(tag: string): void {
+    this.preRequestListeners.delete(tag)
   }
 
   async company(id?: string, selections?: string[]): Promise<Response | ErrorResponse> {
@@ -64,19 +73,21 @@ export default class TornClient {
    * @returns The response from the Torn API, currently unchecked.
    */
   private async execute(url: string): Promise<Response | ErrorResponse> {
+    const meta = { timestamp: Date.now(), url }
+    this.preRequestListeners.forEach((callback) => callback(meta))
     return axios
       .get(url)
       .then((response) => {
         if (response.data['error'] != null) {
           return {
-            _meta: { url },
+            _meta: meta,
             error: { ...response.data['error'], isTornError: true },
           }
         }
-        return { _meta: { url }, ...response.data }
+        return { _meta: meta, ...response.data }
       })
       .catch((reason) => {
-        return { _meta: { url }, error: { reason, isTornError: false } }
+        return { _meta: meta, error: { reason, isTornError: false } }
       })
   }
 
