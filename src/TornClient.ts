@@ -11,7 +11,6 @@ export interface ClientOptions {
 export default class TornClient {
   private apiKey: string
   private doVerifySelection: boolean
-  private throwError: boolean
   private baseUrl: string
 
   /**
