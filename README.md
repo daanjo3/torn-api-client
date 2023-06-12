@@ -9,7 +9,7 @@
 </p>
 
 # torn-api-client
-Unofficial API client for the official Torn API. This API client provides a simplified interface on the Torn API, which should make integration of Torn into JS applications easier.
+Unofficial API client for the official Torn API. This API client provides a simplified interface on the Torn API, which should make integration of Torn into JS applications even easier.
 
 ## Features
 - Configurable `TornClient` class with convenience methods to call each endpoint/compartment.

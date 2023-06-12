@@ -1,8 +1,9 @@
 // Selections taken from https://www.torn.com/api.html.
-// applications, armor, armorynews, attacknews, attacks, attacksfull, basic, boosters, 
-// cesium, chain, chains, contributors, crimenews, crimes, currency, donations, drugs, 
-// fundsnews, mainnews, medical, membershipnews, positions, reports, revives, revivesfull, 
-// stats, temporary, territory, timestamp, upgrades, weapons
+// applications, armor, armorynews, attacknews, attacks, attacksfull, basic, boosters,
+// caches, cesium, chain, chainreport, chains, contributors, crimeexp, crimenews, crimes, 
+// currency, donations, drugs, fundsnews, mainnews, medical, membershipnews, positions, 
+// reports, revives, revivesfull, stats, temporary, territory, territorynews, timestamp, 
+// upgrades, weapons
 
 const selection = {
     applications: 'applications',
@@ -13,10 +14,13 @@ const selection = {
     attacksfull: 'attacksfull',
     basic: 'basic',
     boosters: 'boosters',
+    caches: 'caches',
     cesium: 'cesium',
     chain: 'chain',
+    chainreport: 'chainreport',
     chains: 'chains',
     contributors: 'contributors',
+    crimeexp: 'crimeexp',
     crimenews: 'crimenews',
     crimes: 'crimes',
     currency: 'currency',
@@ -33,6 +37,7 @@ const selection = {
     stats: 'stats',
     temporary: 'temporary',
     territory: 'territory',
+    territorynews: 'territorynews',
     timestamp: 'timestamp',
     upgrades: 'upgrades',
     weapons: 'weapons'
