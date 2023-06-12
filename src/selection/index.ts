@@ -6,10 +6,10 @@ import torn from './torn'
 import user from './user'
 
 export default {
-    company,
-    faction,
-    market,
-    property,
-    torn,
-    user
+  company,
+  faction,
+  market,
+  property,
+  torn,
+  user,
 }
