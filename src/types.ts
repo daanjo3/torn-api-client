@@ -7,7 +7,7 @@ export interface Meta {
   url: string
 }
 
-export type Response = { _meta: Meta } & any
+export type TornResponse = { _meta: Meta } & Record<string, any>
 
 export interface TornError {
   code: number

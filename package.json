@@ -16,7 +16,7 @@
     "api-client"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "yarn clean && tsc",
     "clean": "rm -rf lib/",
     "lint": "eslint --ext .ts src/",
     "format": "prettier --write src/",

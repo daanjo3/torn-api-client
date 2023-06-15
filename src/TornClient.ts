@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import apiSelect from './selection'
-import { ClientOptions, ErrorResponse, Meta } from './types'
+import { ClientOptions, ErrorResponse, Meta, TornResponse } from './types'
 
 export default class TornClient {
   private apiKey: string
@@ -37,34 +37,19 @@ export default class TornClient {
     this.preRequestListeners.delete(tag)
   }
 
-  async company(id?: string, selections?: string[]): Promise<Response | ErrorResponse> {
-    this.verifySelections(selections, apiSelect.company.isSelection)
-    return this.execute(this.buildUrl('company', selections ?? [], id))
-  }
+  company = async (selections?: string | string[], params?: { id?: string }) => this.handle('company', selections, params)
+  // TODO add support for additional params ('to', 'from', 'stat' for 'contributors')
+  faction = async (selections?: string | string[], params?: { id?: string }) => this.handle('faction', selections, params)
+  market = async (selections?: string | string[], params?: { id?: string }) => this.handle('market', selections, params)
+  property = async (selections?: string | string[], params?: { id?: string }) => this.handle('property', selections, params)
+  torn = async (selections?: string | string[], params?: { id?: string }) => this.handle('torn', selections, params)
+  // TODO add support for additional params ('to', 'from')
+  user = async (selections?: string | string[], params?: { id?: string }) => this.handle('user', selections, params)
 
-  async faction(id?: string, selections?: string[]): Promise<Response | ErrorResponse> {
-    this.verifySelections(selections, apiSelect.faction.isSelection)
-    return this.execute(this.buildUrl('faction', selections ?? [], id))
-  }
-
-  async market(id?: string, selections?: string[]): Promise<Response | ErrorResponse> {
-    this.verifySelections(selections, apiSelect.market.isSelection)
-    return this.execute(this.buildUrl('market', selections ?? [], id))
-  }
-
-  async property(id?: string, selections?: string[]): Promise<Response | ErrorResponse> {
-    this.verifySelections(selections, apiSelect.property.isSelection)
-    return this.execute(this.buildUrl('property', selections ?? [], id))
-  }
-
-  async torn(id?: string, selections?: string[]): Promise<Response | ErrorResponse> {
-    this.verifySelections(selections, apiSelect.torn.isSelection)
-    return this.execute(this.buildUrl('torn', selections ?? [], id))
-  }
-
-  async user(id?: string, selections?: string[]): Promise<Response | ErrorResponse> {
-    this.verifySelections(selections, apiSelect.user.isSelection)
-    return this.execute(this.buildUrl('user', selections ?? [], id))
+  private async handle(compartment: string, selections: string | string[] = [], params?: { id?: string }): Promise<TornResponse | ErrorResponse> {
+    const selectionsArr = Array.isArray(selections) ? selections : [selections]
+    this.verifySelections(selectionsArr, apiSelect.user.isSelection)
+    return this.request(this.buildUrl(compartment, selections ?? [], params?.id))
   }
 
   /**
@@ -72,7 +57,7 @@ export default class TornClient {
    * @param url The Torn API URL including parameters
    * @returns The response from the Torn API, currently unchecked.
    */
-  private async execute(url: string): Promise<Response | ErrorResponse> {
+  private async request(url: string): Promise<TornResponse | ErrorResponse> {
     const meta = { timestamp: Date.now(), url }
     this.preRequestListeners.forEach((callback) => callback(meta))
     return axios
@@ -100,10 +85,11 @@ export default class TornClient {
    */
   private buildUrl(
     compartment: string,
-    selections: string[],
+    selections: string | string[],
     id?: string
   ): string {
-    const selectionParams = this.buildSelectionParam(selections)
+    const selectionArr = Array.isArray(selections) ? selections : [selections]
+    const selectionParams = this.buildSelectionParam(selectionArr)
     const idParam = id != null ? id : ''
 
     return (
