@@ -37,19 +37,49 @@ export default class TornClient {
     this.preRequestListeners.delete(tag)
   }
 
-  company = async (selections?: string | string[], params?: { id?: string }) => this.handle('company', selections, params)
+  company = async (selections?: string | string[], params?: { id?: string }): Promise<TornResponse | ErrorResponse> => this.handle('company', selections, params)
   // TODO add support for additional params ('to', 'from', 'stat' for 'contributors')
-  faction = async (selections?: string | string[], params?: { id?: string }) => this.handle('faction', selections, params)
-  market = async (selections?: string | string[], params?: { id?: string }) => this.handle('market', selections, params)
-  property = async (selections?: string | string[], params?: { id?: string }) => this.handle('property', selections, params)
-  torn = async (selections?: string | string[], params?: { id?: string }) => this.handle('torn', selections, params)
+  faction = async (selections?: string | string[], params?: { id?: string }): Promise<TornResponse | ErrorResponse> => this.handle('faction', selections, params)
+  market = async (selections?: string | string[], params?: { id?: string }): Promise<TornResponse | ErrorResponse> => this.handle('market', selections, params)
+  property = async (selections?: string | string[], params?: { id?: string }): Promise<TornResponse | ErrorResponse> => this.handle('property', selections, params)
+  torn = async (selections?: string | string[], params?: { id?: string }): Promise<TornResponse | ErrorResponse> => this.handle('torn', selections, params)
   // TODO add support for additional params ('to', 'from')
-  user = async (selections?: string | string[], params?: { id?: string }) => this.handle('user', selections, params)
+  user = async (selections?: string | string[], params?: { id?: string }): Promise<TornResponse | ErrorResponse> => this.handle('user', selections, params)
 
-  private async handle(compartment: string, selections: string | string[] = [], params?: { id?: string }): Promise<TornResponse | ErrorResponse> {
-    const selectionsArr = Array.isArray(selections) ? selections : [selections]
+  private async handle(compartment: string, selections?: string | string[], params?: { id?: string }): Promise<TornResponse | ErrorResponse> {
+    let selectionsArr = []
+    if (selections) {
+      selectionsArr = Array.isArray(selections) ? selections : [selections]
+    }
     this.verifySelections(selectionsArr, apiSelect.user.isSelection)
-    return this.request(this.buildUrl(compartment, selections ?? [], params?.id))
+    return this.request(this.buildUrl(compartment, selectionsArr, params?.id))
+  }
+
+  /**
+   * Builds the URL that is sent to the Torn API. Handles the path, selections and id params.
+   * @param compartment The path to send the request to, will be one of user, faction, etc..
+   * @param id The id of the user, faction, company or other.
+   * @param selections List of selections to specify the requested content.
+   * @returns
+   */
+  private buildUrl(
+    compartment: string,
+    selections: string[],
+    id?: string
+  ): string {
+    const selectionParams = this.buildSelectionParam(selections)
+    const idParam = id != null ? id : ''
+
+    return (
+      `${this.baseUrl}/${compartment}/${idParam}` +
+      `?selections=${selectionParams}` +
+      `&key=${this.apiKey}`
+    )
+  }
+
+  private buildSelectionParam(selections: string[]): string {
+    if (selections.length == 0) return ''
+    return selections.map((s) => s.toLowerCase()).join(',')
   }
 
   /**
@@ -74,34 +104,6 @@ export default class TornClient {
       .catch((reason) => {
         return { _meta: meta, error: { reason, isTornError: false } }
       })
-  }
-
-  /**
-   * Builds the URL that is sent to the Torn API. Handles the path, selections and id params.
-   * @param compartment The path to send the request to, will be one of user, faction, etc..
-   * @param id The id of the user, faction, company or other.
-   * @param selections List of selections to specify the requested content.
-   * @returns
-   */
-  private buildUrl(
-    compartment: string,
-    selections: string | string[],
-    id?: string
-  ): string {
-    const selectionArr = Array.isArray(selections) ? selections : [selections]
-    const selectionParams = this.buildSelectionParam(selectionArr)
-    const idParam = id != null ? id : ''
-
-    return (
-      `${this.baseUrl}/${compartment}/${idParam}` +
-      `?selections=${selectionParams}` +
-      `&key=${this.apiKey}`
-    )
-  }
-
-  private buildSelectionParam(selections?: string[]): string {
-    if (selections.length == 0) return ''
-    return selections.map((s) => s.toLowerCase()).join(',')
   }
 
   /**

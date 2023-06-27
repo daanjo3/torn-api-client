@@ -6,9 +6,12 @@ const clientBadKey = new TornClient(process.env.TORN_API_KEY + 'dda');
 const clientBadUrl = new TornClient(process.env.TORN_API_KEY + 'dda', { baseUrl: 'google.com' });
 
 // Basic user request
-client.user(null, ['battlestats', 'money']).then(console.log);
-client.user(null, [api.user.battlestats, api.user.money]).then(console.log);
+// client.user(['battlestats', 'money']).then(console.log);
+// client.user([api.user.battlestats, api.user.money]).then(console.log);
+
+// Request user inventory
+client.user(['inventory'], { id: '2575480' })
 
 // Malformed requests
-clientBadKey.user(null, ['battlestats', 'money']).then(console.log);
-clientBadUrl.user(null, ['battlestats', 'money']).then(console.log);
+// clientBadKey.user(['battlestats', 'money']).then(console.log);
+// clientBadUrl.user(['battlestats', 'money']).then(console.log);
