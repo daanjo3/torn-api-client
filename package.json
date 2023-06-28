@@ -1,6 +1,6 @@
 {
   "name": "torn-api-client",
-  "version": "1.0.1-SNAPSHOT-1",
+  "version": "1.0.1",
   "description": "API client for the official Torn API",
   "author": "daanjo3",
   "license": "MIT",

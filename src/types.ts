@@ -4,7 +4,9 @@ export interface ClientOptions {
 }
 
 export interface Meta {
+  timestamp: number
   url: string
+  apiKey: string
 }
 
 export type TornResponse = { _meta: Meta } & Record<string, any>

@@ -88,7 +88,7 @@ export default class TornClient {
    * @returns The response from the Torn API, currently unchecked.
    */
   private async request(url: string): Promise<TornResponse | ErrorResponse> {
-    const meta = { timestamp: Date.now(), url }
+    const meta = { timestamp: Date.now(), url, apiKey: this.apiKey }
     this.preRequestListeners.forEach((callback) => callback(meta))
     return axios
       .get(url)
